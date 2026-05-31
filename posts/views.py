@@ -86,3 +86,19 @@ def delete_post(request, post_id):
     return Response(
         {"message": "Post deleted successfully"}
     )
+
+@api_view(['GET'])
+def get_post(request, post_id):
+
+    try:
+        post = Post.objects.get(id=post_id)
+
+    except Post.DoesNotExist:
+        return Response(
+            {"error": "Post not found"},
+            status=404
+        )
+
+    serializer = PostSerializer(post)
+
+    return Response(serializer.data)

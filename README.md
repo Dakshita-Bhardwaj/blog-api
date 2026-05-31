@@ -1,43 +1,67 @@
 # Blog API
 
-A Django REST Framework blog backend with JWT authentication.
+A Django REST Framework blog backend featuring JWT authentication, authorization, and CRUD operations for blog posts.
 
 ## Features
 
-- User Registration
-- User Login
-- JWT Authentication
-- Create Blog Post
-- Read Blog Posts
-- Update Blog Posts
-- Delete Blog Posts
-- Ownership-based Authorization
+* User Registration
+* User Login
+* JWT Authentication (Access & Refresh Tokens)
+* Create Blog Posts
+* View All Blog Posts
+* View Single Blog Post
+* Update Blog Posts
+* Delete Blog Posts
+* Ownership-Based Authorization
 
 ## Tech Stack
 
-- Python
-- Django
-- Django REST Framework
-- SimpleJWT
-- SQLite
+* Python 3.12
+* Django
+* Django REST Framework
+* SimpleJWT
+* SQLite
 
 ## API Endpoints
 
 ### Authentication
 
-POST /api/register/
-
-POST /api/login/
+| Method | Endpoint       |
+| ------ | -------------- |
+| POST   | /api/register/ |
+| POST   | /api/login/    |
 
 ### Posts
 
-GET /api/posts/
+| Method | Endpoint                |
+| ------ | ----------------------- |
+| GET    | /api/posts/             |
+| GET    | /api/posts/<id>/        |
+| POST   | /api/posts/create/      |
+| PUT    | /api/posts/<id>/update/ |
+| DELETE | /api/posts/<id>/delete/ |
+
+## Example Request
 
 POST /api/posts/create/
 
-PUT /api/posts/<id>/
+```json
+{
+  "title": "My First Blog",
+  "content": "Backend is finally making sense."
+}
+```
 
-DELETE /api/posts/<id>/delete/
+## Example Response
+
+```json
+{
+  "id": 1,
+  "title": "My First Blog",
+  "content": "Backend is finally making sense.",
+  "author": "dakshita"
+}
+```
 
 ## Setup
 

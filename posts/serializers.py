@@ -16,6 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'author',
+            'published_at',
             'created_at',
             'updated_at'
         ]

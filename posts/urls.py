@@ -12,9 +12,9 @@ urlpatterns = [
     
     path('create/', create_post),
 
-    path('<int:post_id>/', get_post),
+    path('<uuid:post_id>/', get_post),
 
-    path('<int:post_id>/update/', update_post),
+    path('<uuid:post_id>/update/', update_post),
 
-    path('<int:post_id>/delete/', delete_post),
+    path('<uuid:post_id>/delete/', delete_post),
 ]

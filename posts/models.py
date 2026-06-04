@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 import uuid
 
+User = get_user_model()
 
 class Post(models.Model):
 
@@ -12,7 +13,19 @@ class Post(models.Model):
     )
     
     title = models.CharField(max_length=200)
+    
     content = models.TextField()
+
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+        ]
+    
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='draft'
+        )
 
     author = models.ForeignKey(
         User,

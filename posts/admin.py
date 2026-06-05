@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, PostImage
 
 
 @admin.register(Post)
@@ -27,4 +27,17 @@ class PostAdmin(admin.ModelAdmin):
     
     ordering = (
         '-created_at',
+    )
+
+@admin.register(PostImage)
+class PostImageAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id',
+        'post',
+        'image'
+    )
+
+    search_fields = (
+        'post__title',
     )

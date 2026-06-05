@@ -4,7 +4,8 @@ from .views import (
     PostDetailView,
     PostCreateView,
     PostUpdateView,
-    PostDeleteView
+    PostDeleteView,
+    PostImageUploadView
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('<uuid:post_id>/', PostDetailView.as_view()),
     path('<uuid:post_id>/update/', PostUpdateView.as_view()),
     path('<uuid:post_id>/delete/', PostDeleteView.as_view()),
+    path('<uuid:post_id>/images/upload/', PostImageUploadView.as_view()),
 ]

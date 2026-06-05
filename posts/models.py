@@ -42,3 +42,24 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+class PostImage(models.Model):
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
+
+    image = models.ImageField(
+        upload_to='post_images/'
+    )
+
+    def __str__(self):
+        return f"Image for {self.post.title}"

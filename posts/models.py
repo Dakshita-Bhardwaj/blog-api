@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 import uuid
 
 User = get_user_model()
@@ -42,6 +43,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.status == 'published' and not self.published_at:
+            self.published_at = timezone.now()
+        super().save(*args, **kwargs)
     
 class PostImage(models.Model):
 

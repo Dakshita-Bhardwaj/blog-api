@@ -5,12 +5,15 @@ from .views import (
     PostCreateView,
     PostUpdateView,
     PostDeleteView,
+    PublishedPostListView,
     PostImageUploadView
 )
+from rest_framework.filters import SearchFilter
 
 urlpatterns = [
     path('', PostListView.as_view()),
     path('create/', PostCreateView.as_view()),
+    path('published/', PublishedPostListView.as_view()),
     path('<uuid:post_id>/', PostDetailView.as_view()),
     path('<uuid:post_id>/update/', PostUpdateView.as_view()),
     path('<uuid:post_id>/delete/', PostDeleteView.as_view()),

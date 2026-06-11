@@ -7,6 +7,7 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.filters import SearchFilter
 
 from .models import Post, PostImage
 from .serializers import PostSerializer, PostImageSerializer
@@ -15,6 +16,14 @@ from .serializers import PostSerializer, PostImageSerializer
 class PostListView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    filter_backends = [SearchFilter]
+
+    search_fields = [
+        'title',
+        'content',
+        'author__username'
+    ]
 
 
 class PostDetailView(RetrieveAPIView):
@@ -52,8 +61,6 @@ class PostUpdateView(UpdateAPIView):
         return post
     
     
-
-
 class PostDeleteView(DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -72,6 +79,15 @@ class PostDeleteView(DestroyAPIView):
 
         return post
     
+
+class PublishedPostListView(ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(
+            status='published'
+        )
+
 class PostImageUploadView(CreateAPIView):
     serializer_class = PostImageSerializer
     permission_classes = [IsAuthenticated]

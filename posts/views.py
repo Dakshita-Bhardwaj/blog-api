@@ -11,6 +11,7 @@ from rest_framework.filters import SearchFilter
 
 from .models import Post, PostImage
 from .serializers import PostSerializer, PostImageSerializer
+from django.shortcuts import get_object_or_404
 
 
 class PostListView(ListAPIView):
@@ -30,7 +31,7 @@ class PostDetailView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    lookup_field = 'id'
+    lookup_field = 'uid'
     lookup_url_kwarg = 'post_id'
 
 
@@ -47,7 +48,7 @@ class PostUpdateView(UpdateAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
-    lookup_field = 'id'
+    lookup_field = 'uid'
     lookup_url_kwarg = 'post_id'
 
     def get_object(self):
@@ -66,7 +67,7 @@ class PostDeleteView(DestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
-    lookup_field = 'id'
+    lookup_field = 'uid'
     lookup_url_kwarg = 'post_id'
 
     def get_object(self):
@@ -96,7 +97,7 @@ class PostImageUploadView(CreateAPIView):
 
         post_id = self.kwargs['post_id']
 
-        post = Post.objects.get(id=post_id)
+        post = get_object_or_404(Post, uid=post_id)
 
         if post.author != self.request.user:
             raise PermissionDenied(

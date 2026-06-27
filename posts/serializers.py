@@ -7,7 +7,7 @@ class PostImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostImage
         fields = [
-            'id',
+            'uid',
             'image'
         ]
 
@@ -27,7 +27,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = [
-            'id',
+            'uid',
             'title',
             'content',
             'author',

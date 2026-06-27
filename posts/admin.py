@@ -11,6 +11,7 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [PostImageInline]
 
     list_display = (
+        'uid',
         'title',
         'author',
         'status',
@@ -26,6 +27,7 @@ class PostAdmin(admin.ModelAdmin):
     )
     
     list_filter = (
+        'status',
         'author',
         'created_at',
         'updated_at'

@@ -5,28 +5,29 @@ import uuid
 
 User = get_user_model()
 
+
 class Post(models.Model):
 
-    id = models.UUIDField(
-        primary_key=True,
+    uid = models.UUIDField(
         default=uuid.uuid4,
-        editable=False
+        editable=False,
+        unique=True,
     )
-    
+
     title = models.CharField(max_length=200)
-    
+
     content = models.TextField()
 
     STATUS_CHOICES = [
         ('draft', 'Draft'),
         ('published', 'Published'),
-        ]
-    
+    ]
+
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
         default='draft'
-        )
+    )
 
     author = models.ForeignKey(
         User,
@@ -34,8 +35,8 @@ class Post(models.Model):
     )
 
     published_at = models.DateTimeField(
-    null=True,
-    blank=True
+        null=True,
+        blank=True
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -43,28 +44,29 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
-        if self.status == 'published' and not self.published_at:
+        if self.status == "published" and not self.published_at:
             self.published_at = timezone.now()
         super().save(*args, **kwargs)
-    
+
+
 class PostImage(models.Model):
 
-    id = models.UUIDField(
-        primary_key=True,
+    uid = models.UUIDField(
         default=uuid.uuid4,
-        editable=False
+        editable=False,
+        unique=True
     )
 
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='images'
+        related_name="images"
     )
 
     image = models.ImageField(
-        upload_to='post_images/'
+        upload_to="post_images/"
     )
 
     def __str__(self):

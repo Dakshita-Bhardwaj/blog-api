@@ -1,18 +1,75 @@
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import RegisterSerializer
+from rest_framework import status
+
+from .serializers import (
+    SendOTPSerializer,
+    VerifyOTPSerializer,
+    RegisterSerializer,
+)
 
 
-@api_view(['POST'])
-def register_view(request):
+class SendOTPView(APIView):
 
-    serializer = RegisterSerializer(data=request.data)
+    def post(self, request):
 
-    if serializer.is_valid():
-        serializer.save()
+        serializer = SendOTPSerializer(data=request.data)
 
-        return Response({
-            'message': 'User created successfully'
-        })
+        if serializer.is_valid():
+            serializer.save()
 
-    return Response(serializer.errors)
+            return Response(
+                {
+                    "message": "OTP sent successfully."
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class VerifyOTPView(APIView):
+
+    def post(self, request):
+
+        serializer = VerifyOTPSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(
+                {
+                    "message": "Email verified successfully."
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class RegisterView(APIView):
+
+    def post(self, request):
+
+        serializer = RegisterSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(
+                {
+                    "message": "User created successfully."
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
